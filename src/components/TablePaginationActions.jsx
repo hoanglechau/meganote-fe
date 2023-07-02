@@ -5,9 +5,16 @@ import LastPageIcon from "@mui/icons-material/LastPage";
 import { Box, IconButton } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
-function TablePaginationActions(props) {
+/**
+ * @description A component that renders the pagination actions for a table
+ * @param {number} count
+ * @param {number} page
+ * @param {number} rowsPerPage
+ * @param {function} onPageChange
+ * @author [Hoang Le Chau](https://github.com/hoanglechau)
+ */
+function TablePaginationActions({ count, page, rowsPerPage, onPageChange }) {
   const theme = useTheme();
-  const { count, page, rowsPerPage, onPageChange } = props;
 
   const handleFirstPageButtonClick = event => {
     onPageChange(event, 0);
