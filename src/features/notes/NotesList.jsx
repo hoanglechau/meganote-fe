@@ -17,6 +17,10 @@ import useTitle from "../../hooks/useTitle";
 import NoteTable from "./NoteTable";
 import { getNotes } from "./notesSlice";
 
+/**
+ * @description The Notes List page, with a table of all notes in the database
+ * @author [Hoang Le Chau](https://github.com/hoanglechau)
+ */
 const NotesList = () => {
   useTitle("Meganote: Notes List");
 
@@ -97,6 +101,9 @@ const NotesList = () => {
         sx={{
           height: "100%",
           width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
         }}
       >
         <Typography
@@ -111,7 +118,7 @@ const NotesList = () => {
         >
           Notes List
         </Typography>
-        <Card sx={{ p: { xs: 0.9, sm: 3, lg: 3 }, boxShadow: "none" }}>
+        <Card sx={{ p: { xs: 1.5, sm: 3, lg: 3 }, boxShadow: "none" }}>
           <Stack spacing={2}>
             <Stack direction={{ xs: "column", sm: "row" }} alignItems="center">
               <Box
@@ -132,7 +139,7 @@ const NotesList = () => {
                   variant="subtitle"
                   sx={{
                     ml: 2,
-                    display: { xs: "none", md: "flex" },
+                    display: { xs: "none", lg: "flex" },
                   }}
                 >
                   {totalNotes > 1
@@ -163,7 +170,7 @@ const NotesList = () => {
                 sx={{
                   "& .MuiTablePagination-selectLabel, .MuiTablePagination-select, .MuiTablePagination-selectIcon":
                     {
-                      display: { xs: "none", md: "block" },
+                      display: { xs: "none", lg: "flex" },
                     },
                 }}
                 component="div"
