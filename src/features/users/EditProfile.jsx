@@ -6,6 +6,10 @@ import useTitle from "../../hooks/useTitle";
 import EditProfileForm from "./EditProfileForm";
 import { getUser } from "./usersSlice";
 
+/**
+ * @description The Edit Profile page, with a form to edit the user's profile information
+ * @author [Hoang Le Chau](https://github.com/hoanglechau)
+ */
 const EditProfile = () => {
   // Custom hook to set the page title
   useTitle("Meganote: Edit Profile");
