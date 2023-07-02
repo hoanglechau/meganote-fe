@@ -8,6 +8,10 @@ import { getAllUsers } from "../users/usersSlice";
 import EditNoteForm from "./EditNoteForm";
 import { getNote } from "./notesSlice";
 
+/**
+ * @description The Edit Note page
+ * @author [Hoang Le Chau](https://github.com/hoanglechau)
+ */
 const EditNote = () => {
   // Custom hook to set the title of the page
   useTitle("Meganote: Edit Note");
