@@ -20,6 +20,10 @@ import LoadingScreen from "./LoadingScreen";
 const NOTES_REGEX = /^\/dash\/notes(\/)?$/;
 const USERS_REGEX = /^\/dash\/users(\/)?$/;
 
+/**
+ * @description The header component for the dashboard
+ * @author [Hoang Le Chau](https://github.com/hoanglechau)
+ */
 const DashHeader = () => {
   // Get the user status from the useAuth custom hook
   const { user } = useAuth();
@@ -116,7 +120,7 @@ const DashHeader = () => {
   const themeButton = (
     <IconButton onClick={handleChangeTheme}>
       <DarkModeIcon
-        sx={{ fontSize: { xs: "2rem", sm: "3rem", lg: "1.5rem" } }}
+        sx={{ fontSize: { xs: "1.5rem", sm: "3rem", lg: "1.5rem" } }}
       />
     </IconButton>
   );
@@ -124,9 +128,9 @@ const DashHeader = () => {
   const menuButton = (
     <IconButton
       onClick={handleMenuClicked}
-      sx={{ display: { xs: "block", lg: "none" } }}
+      sx={{ display: { xs: "flex", lg: "none" } }}
     >
-      <MenuIcon sx={{ fontSize: { xs: "2rem", sm: "3rem", lg: "1.5rem" } }} />
+      <MenuIcon sx={{ fontSize: { xs: "1.4rem", sm: "3rem", lg: "1.5rem" } }} />
     </IconButton>
   );
 
@@ -159,11 +163,14 @@ const DashHeader = () => {
     >
       {menuButton}
       <ColorLink
-        variant="h4"
         to="/dash/notes"
         className="dash-header__title"
         component={Link}
-        sx={{ pl: 1, color: "white" }}
+        sx={{
+          fontSize: { xs: "1.4rem", sm: "3rem", lg: "2rem" },
+          pl: 1,
+          color: "white",
+        }}
       >
         Meganote
       </ColorLink>
@@ -177,7 +184,7 @@ const DashHeader = () => {
       <ConfirmIconModal
         buttonIcon={
           <LogoutIcon
-            sx={{ fontSize: { xs: "2rem", sm: "3rem", lg: "1.5rem" } }}
+            sx={{ fontSize: { xs: "1.4rem", sm: "3rem", lg: "1.5rem" } }}
           />
         }
         title="Log Out"
