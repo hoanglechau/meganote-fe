@@ -14,6 +14,11 @@ import { v4 as uuidv4 } from "uuid";
 import ConfirmIconModal from "../../components/ConfirmIconModal";
 import useAuth from "../../hooks/useAuth";
 
+/**
+ * @description UserTable component, which contains the table of users in the Users List page
+ * @param {array} users - The array of users to be displayed in the table
+ * @author [Hoang Le Chau](https://github.com/hoanglechau)
+ */
 function UserTable({ users }) {
   const navigate = useNavigate();
   const auth = useAuth();
@@ -63,7 +68,7 @@ function UserTable({ users }) {
           <TableHead>
             <TableRow>
               <TableCell sx={{ display: "table-cell", fontWeight: "900" }}>
-                Username
+                Name
               </TableCell>
               <TableCell sx={{ display: "table-cell", fontWeight: "900" }}>
                 Role
@@ -120,7 +125,7 @@ function UserTable({ users }) {
                     align="left"
                     sx={{ display: "table-cell" }}
                   >
-                    {user.username}
+                    {user.fullname}
                   </TableCell>
                   <TableCell
                     onClick={() => handleEditUser(user)}
