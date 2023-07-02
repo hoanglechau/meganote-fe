@@ -40,8 +40,13 @@ const defaultValues = {
   text: "",
   status: "Open",
   user: "",
+  deadline: new Date(),
 };
 
+/**
+ * @description The New Note page, with a form for creating a new note
+ * @author [Hoang Le Chau](https://github.com/hoanglechau)
+ */
 const NewNoteForm = () => {
   // Custom hook to set the title of the page
   useTitle("Meganote: New Note");
@@ -149,7 +154,7 @@ const NewNoteForm = () => {
       <Paper
         elevation={1}
         sx={{
-          p: 5,
+          p: { xs: 2, sm: 5 },
           border: "1px solid #ccc",
           boxShadow: "none",
           width: "100%",
@@ -184,6 +189,7 @@ const NewNoteForm = () => {
             <FSelect name="status" label="Status">
               {statusOptions}
             </FSelect>
+
             <Box
               component="div"
               sx={{
