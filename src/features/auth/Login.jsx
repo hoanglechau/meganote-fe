@@ -35,6 +35,10 @@ const defaultValues = {
   persist: true,
 };
 
+/**
+ * @description Login page for users to login to their account
+ * @author [Hoang Le Chau](https://github.com/hoanglechau)
+ */
 function Login() {
   // Custom hook to set the page title
   useTitle("User Login");
@@ -167,12 +171,14 @@ function Login() {
               component="div"
               sx={{
                 display: "flex",
+                flexDirection: "column",
                 justifyContent: "center",
                 alightItems: "center",
+                gap: 2,
               }}
             >
               <LoadingButton
-                size="large"
+                size="medium"
                 type="submit"
                 variant="contained"
                 loading={isSubmitting}
@@ -180,6 +186,14 @@ function Login() {
               >
                 Log in
               </LoadingButton>
+
+              <ColorButton
+                variant="contained"
+                color="primary"
+                to="/forgotpassword"
+              >
+                Forgot Password?
+              </ColorButton>
             </Box>
           </FormProvider>
         </Container>
