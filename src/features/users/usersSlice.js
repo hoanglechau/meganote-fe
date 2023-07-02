@@ -116,7 +116,6 @@ export const getUsers =
         if (filterInactive) {
           params.active = filterInactive;
         }
-        console.log("params", params);
         const response = await apiService.get("/users", { params });
         dispatch(slice.actions.getUsersSuccess(response));
       } catch (error) {
