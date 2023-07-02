@@ -13,6 +13,11 @@ import { toast } from "react-toastify";
 import ConfirmIconModal from "../../components/ConfirmIconModal";
 import useAuth from "../../hooks/useAuth";
 
+/**
+ * @description Table to display all notes
+ * @param {array} notes
+ * @author [Hoang Le Chau](https://github.com/hoanglechau)
+ */
 function NoteTable({ notes }) {
   const navigate = useNavigate();
   const auth = useAuth();
