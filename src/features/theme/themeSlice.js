@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+/**
+ * @description This file is used to create a redux slice for theme feature, including actions and reducers
+ */
+
 const initialState = {
   theme: "dark",
 };
