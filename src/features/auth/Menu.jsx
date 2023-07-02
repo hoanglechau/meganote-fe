@@ -2,29 +2,40 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import DescriptionIcon from "@mui/icons-material/Description";
 import NoteAddIcon from "@mui/icons-material/NoteAdd";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
 import { AppBar, Avatar, Box, Typography } from "@mui/material";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import ColorIconButton from "../../components/ColorIconButton";
 import useAuth from "../../hooks/useAuth";
 import useTitle from "../../hooks/useTitle";
 
+/**
+ * @description The navigation menu component for the dashboard
+ * @author [Hoang Le Chau](https://github.com/hoanglechau)
+ */
 const Menu = () => {
   const { user } = useAuth();
   // Custom hook to set the page title
   useTitle(`Meganote: ${user.username}`);
 
   const { pathname } = useLocation();
+  const navigate = useNavigate();
 
-  const accountUrl = `/dash/account/${user._id}`;
+  const profileUrl = `/dash/profile/${user._id}`;
+  const settingsUrl = `/dash/settings/${user._id}`;
+
+  const handleAvatarClick = () => {
+    navigate(profileUrl);
+  };
 
   let profileButton = null;
-  if (pathname.includes("/dash/account")) {
+  if (pathname.includes("/dash/profile")) {
     profileButton = (
       <ColorIconButton
         variant="text"
         component={Link}
-        to={accountUrl}
+        to={profileUrl}
         sx={{
           backgroundColor: "primary.main",
           "&:hover": { backgroundColor: "primary.dark" },
@@ -43,7 +54,7 @@ const Menu = () => {
     );
   } else {
     profileButton = (
-      <ColorIconButton variant="text" component={Link} to={accountUrl}>
+      <ColorIconButton variant="text" component={Link} to={profileUrl}>
         <AccountCircleIcon
           sx={{
             mr: { xs: 3, sm: 3, lg: 2 },
@@ -51,6 +62,43 @@ const Menu = () => {
           }}
         />
         My Profile
+      </ColorIconButton>
+    );
+  }
+
+  let settingsButton = null;
+  if (pathname.includes("/dash/settings")) {
+    settingsButton = (
+      <ColorIconButton
+        variant="text"
+        component={Link}
+        to={settingsUrl}
+        sx={{
+          backgroundColor: "primary.main",
+          "&:hover": { backgroundColor: "primary.dark" },
+          fontSize: { xs: "1.3rem", sm: "2rem", lg: "1.2rem" },
+          p: 1,
+        }}
+      >
+        <ManageAccountsIcon
+          sx={{
+            mr: { xs: 3, sm: 3, lg: 2 },
+            fontSize: { xs: "2rem", sm: "3rem", lg: "1.5rem" },
+          }}
+        />
+        Settings
+      </ColorIconButton>
+    );
+  } else {
+    settingsButton = (
+      <ColorIconButton variant="text" component={Link} to={settingsUrl}>
+        <ManageAccountsIcon
+          sx={{
+            mr: { xs: 3, sm: 3, lg: 2 },
+            fontSize: { xs: "2rem", sm: "3rem", lg: "1.5rem" },
+          }}
+        />
+        Settings
       </ColorIconButton>
     );
   }
@@ -217,6 +265,7 @@ const Menu = () => {
         }}
       >
         {profileButton}
+        {settingsButton}
         {notesButton}
         {newNotesButton}
         {usersButton}
@@ -235,6 +284,7 @@ const Menu = () => {
         }}
       >
         {profileButton}
+        {settingsButton}
         {notesButton}
         {newNotesButton}
       </Box>
@@ -253,11 +303,15 @@ const Menu = () => {
         flexDirection: "column",
         alignItems: "center",
         width: "fit-content",
-        gap: "0.8rem",
-        p: 2,
+        gap: { xs: "0.2rem", sm: "0.8rem" },
+        p: { xs: 1.5, sm: 2 },
       }}
     >
-      <Box component="div">
+      <Box
+        component="div"
+        onClick={handleAvatarClick}
+        sx={{ cursor: "pointer" }}
+      >
         <Avatar
           alt="User Avatar"
           src={user.avatarUrl}
