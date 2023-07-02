@@ -3,6 +3,10 @@ import { Outlet } from "react-router-dom";
 import Menu from "../features/auth/Menu";
 import DashHeader from "./DashHeader";
 
+/**
+ * @description The layout for the dashboard
+ * @author [Hoang Le Chau](https://github.com/hoanglechau)
+ */
 const DashLayout = () => {
   return (
     <Box
