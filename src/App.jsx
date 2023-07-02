@@ -4,7 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import DashLayout from "./components/DashLayout";
 import DashMenu from "./components/DashMenu";
 import Layout from "./components/Layout";
-import Public from "./components/Public";
+import Public from "./pages/Public";
 import { ROLES } from "./config/roles";
 import Login from "./features/auth/Login";
 import RequireAuth from "./features/auth/RequireAuth";
@@ -16,9 +16,16 @@ import EditUser from "./features/users/EditUser";
 import NewUserForm from "./features/users/NewUserForm";
 import Register from "./features/auth/Register";
 import UsersList from "./features/users/UsersList";
+import ForgotPassword from "./features/auth/ForgotPassword";
+import ResetPassword from "./features/auth/ResetPassword";
+import EditSettings from "./features/users/EditSettings";
 import useTitle from "./hooks/useTitle";
 import ThemeProvider from "./theme";
 
+/**
+ * @description The main app component
+ * @author [Hoang Le Chau](https://github.com/hoanglechau)
+ */
 function App() {
   // Custom hook to set the page title
   useTitle("Meganote");
@@ -32,6 +39,14 @@ function App() {
           <Route index element={<Public />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
+          <Route path="forgotpassword" element={<ForgotPassword />} />
+          <Route path="resetpassword">
+            <Route
+              index
+              path=":passwordResetToken"
+              element={<ResetPassword />}
+            />
+          </Route>
 
           {/* Protected Routes */}
 
@@ -53,8 +68,12 @@ function App() {
                 </Route>
               </Route>
 
-              <Route path="account">
+              <Route path="profile">
                 <Route index path=":id" element={<EditProfile />} />
+              </Route>
+
+              <Route path="settings">
+                <Route index path=":id" element={<EditSettings />} />
               </Route>
 
               <Route path="notes">
