@@ -113,7 +113,7 @@ const NewNoteForm = () => {
           "&&.Mui-selected": { backgroundColor: "primary.main" },
         }}
       >
-        {user.username}
+        {user.fullname}
       </MenuItem>
     );
   });
