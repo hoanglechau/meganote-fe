@@ -1,5 +1,9 @@
 import { CircularProgress, Paper } from "@mui/material";
 
+/**
+ * @description A loading circle component that is used in the Users List and Notes List pages
+ * @author [Hoang Le Chau](https://github.com/hoanglechau)
+ */
 const LoadingCircle = () => {
   return (
     <Paper
