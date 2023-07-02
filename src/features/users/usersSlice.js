@@ -2,6 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import apiService from "../../app/apiService";
 
+/**
+ * @description This file is used to create a redux slice for users feature, including actions and reducers
+ * @author [Hoang Le Chau](https://github.com/hoanglechau)
+ */
+
 const initialState = {
   isLoading: false,
   error: null,
@@ -51,12 +56,12 @@ const slice = createSlice({
       state.selectedUser = action.payload;
     },
 
-    updateUserSuccess(state, action) {
+    updateUserSuccess(state) {
       state.isLoading = false;
       state.error = null;
     },
 
-    deleteUserSuccess(state, action) {
+    deleteUserSuccess(state) {
       state.isLoading = false;
       state.error = null;
     },
@@ -70,6 +75,9 @@ const slice = createSlice({
 
 export default slice.reducer;
 
+/**
+ * @description Get all users
+ */
 export const getAllUsers = () => async dispatch => {
   dispatch(slice.actions.startLoading());
   try {
@@ -81,6 +89,13 @@ export const getAllUsers = () => async dispatch => {
   }
 };
 
+/**
+ * @description Get users with filters and table pagination
+ * @param {string} filterName - Filter by full name or role
+ * @param {boolean} filterInactive - Filter by active status
+ * @param {number} page - Current page
+ * @param {number} limit - Number of users per page
+ */
 export const getUsers =
   ({ filterName, filterInactive, page = 1, limit = 12 }) =>
   async dispatch => {
@@ -95,7 +110,7 @@ export const getUsers =
         ) {
           params.role = filterName;
         } else {
-          params.username = filterName;
+          params.fullname = filterName;
         }
 
         if (filterInactive) {
@@ -129,6 +144,10 @@ export const getUsers =
     }
   };
 
+/**
+ * @description Get a single user by id
+ * @param {ObjectId} id - User id
+ */
 export const getUser = id => async dispatch => {
   dispatch(slice.actions.startLoading());
   try {
