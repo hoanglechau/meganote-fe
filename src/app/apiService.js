@@ -1,5 +1,10 @@
 import axios from "axios";
 
+/**
+ * @description This file is used to create a axios instance
+ * @author [Hoang Le Chau](https://github.com/hoanglechau)
+ */
+
 const apiService = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
 });
