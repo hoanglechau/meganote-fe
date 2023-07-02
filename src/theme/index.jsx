@@ -7,6 +7,11 @@ import {
 } from "@mui/material/styles";
 import { useSelector } from "react-redux";
 
+/**
+ * @description This file contains a theme provider that works with Material UI
+ * @author [Hoang Le Chau](https://github.com/hoanglechau)
+ */
+
 const PRIMARY = {
   main: "#3379c6",
   light: "#284eb2",
