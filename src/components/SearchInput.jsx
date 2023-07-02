@@ -2,6 +2,13 @@ import SearchIcon from "@mui/icons-material/Search";
 import { IconButton, InputAdornment, TextField } from "@mui/material";
 import { useState } from "react";
 
+/**
+ * @description A search input component
+ * @param {function} handleSubmit
+ * @param {string} placeholder
+ * @param {object} other
+ * @author [Hoang Le Chau](https://github.com/hoanglechau)
+ */
 function SearchInput({ handleSubmit, placeholder, ...other }) {
   const [searchQuery, setSearchQuery] = useState("");
 
