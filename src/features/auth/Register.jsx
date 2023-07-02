@@ -29,26 +29,45 @@ const UserSchema = Yup.object().shape({
   username: Yup.string()
     .min(3, "Minimum 3 letters")
     .max(20, "Maximum 20 letters")
-    .matches("[A-Za-z]", "Only letters are allowed")
+    .matches(
+      /^[\w\-\\S]+$/i,
+      "Only letters, numbers, hyphens, and underscores are allowed. No whitespaces"
+    )
     .required("Username is required"),
+  fullname: Yup.string()
+    .min(3, "Minimum 3 letters")
+    .max(20, "Maximum 20 letters")
+    .matches(/^[a-z\s]+$/i, "Only letters are allowed")
+    .required("Full name is required"),
+  email: Yup.string()
+    .email("Please enter a valid email")
+    .required("Email is required"),
   password: Yup.string()
     .min(4, "Minimum 4 characters")
     .max(12, "Maximum 12 characters")
-    .matches("[A-z0-9!@#$%]", "Only letters, numbers, and !@#$% are allowed")
+    .matches(
+      /^[\w\-\S]+$/,
+      "Only letters, numbers, and special characters allowed. No whitespaces"
+    )
     .required("Password is required"),
   passwordConfirmation: Yup.string()
     .required("Please confirm your password")
     .oneOf([Yup.ref("password")], "Passwords must match"),
-  avatarUrl: Yup.string().url("Please enter a valid URL"),
 });
 
 const defaultValues = {
   username: "",
+  fullname: "",
+  email: "",
   password: "",
   passwordConfirmation: "",
   role: "Admin",
 };
 
+/**
+ * @description The Register page component
+ * @author [Hoang Le Chau](https://github.com/hoanglechau)
+ */
 function Register() {
   // Custom hook to set the page title
   useTitle("Meganote: Register");
@@ -71,9 +90,9 @@ function Register() {
   } = methods;
 
   const onSubmit = async data => {
-    const { username, password, role, avatarUrl } = data;
+    const { username, fullname, email, password, role } = data;
     try {
-      await auth.register({ username, password, role, avatarUrl }, () => {
+      await auth.register({ username, fullname, email, password, role }, () => {
         navigate("/login");
       });
     } catch (error) {
@@ -142,7 +161,9 @@ function Register() {
               )}
 
               <FTextField name="username" label="Username" />
-              <FTextField name="avatarUrl" label="Avatar URL" />
+              <FTextField name="fullname" label="Full Name" />
+              <FTextField name="email" label="Email" />
+
               <FTextField
                 name="password"
                 label="Password"
