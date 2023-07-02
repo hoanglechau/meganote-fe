@@ -2,6 +2,11 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 import LoadingPage from "../../components/LoadingPage";
 import useAuth from "../../hooks/useAuth";
 
+/**
+ * @description A wrapper component to protect routes that require authentication
+ * @param {array} allowedRoles
+ * @author [Hoang Le Chau](https://github.com/hoanglechau)
+ */
 const RequireAuth = ({ allowedRoles }) => {
   const location = useLocation();
 
