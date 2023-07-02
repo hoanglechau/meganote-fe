@@ -2,6 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import apiService from "../../app/apiService";
 
+/**
+ * @description This file is used to create a redux slice for notes feature, including actions and reducers
+ * @author [Hoang Le Chau](https://github.com/hoanglechau)
+ */
+
 const initialState = {
   isLoading: false,
   error: null,
@@ -69,6 +74,9 @@ const slice = createSlice({
 
 export default slice.reducer;
 
+/**
+ * @description Get all notes
+ */
 export const getAllNotes = () => async dispatch => {
   dispatch(slice.actions.startLoading());
   try {
@@ -80,6 +88,13 @@ export const getAllNotes = () => async dispatch => {
   }
 };
 
+/**
+ * @description Get notes with filters and table pagination
+ * @param {string} filterName
+ * @param {boolean} filterCompleted
+ * @param {number} page
+ * @param {number} limit
+ */
 export const getNotes =
   ({ filterName, filterCompleted, page = 1, limit = 12 }) =>
   async dispatch => {
@@ -129,6 +144,10 @@ export const getNotes =
     }
   };
 
+/**
+ * @description Get a single note by id
+ * @param {ObjectId} id
+ */
 export const getNote = id => async dispatch => {
   dispatch(slice.actions.startLoading());
   try {
