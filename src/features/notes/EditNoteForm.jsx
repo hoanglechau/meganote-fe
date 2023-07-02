@@ -32,7 +32,13 @@ const NoteSchema = Yup.object().shape({
     .required("Description is required"),
 });
 
-const EditUserForm = ({ note, users }) => {
+/**
+ * @description The form for editing a note
+ * @param {object} note The note to be edited
+ * @param {array} users The list of users
+ * @author [Hoang Le Chau](https://github.com/hoanglechau)
+ */
+const EditNoteForm = ({ note, users }) => {
   const auth = useAuth();
   const { user } = useAuth();
   const theme = useTheme();
@@ -164,7 +170,7 @@ const EditUserForm = ({ note, users }) => {
       <Paper
         elevation={1}
         sx={{
-          p: 5,
+          p: { xs: 2, sm: 5 },
           border: "1px solid #ccc",
           boxShadow: "none",
           width: "100%",
@@ -221,4 +227,4 @@ const EditUserForm = ({ note, users }) => {
   );
 };
 
-export default EditUserForm;
+export default EditNoteForm;
