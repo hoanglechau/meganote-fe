@@ -66,6 +66,7 @@ const NotesList = () => {
         limit: rowsPerPage,
       })
     );
+    setFilterName("");
   }, [filterName, filterCompleted, page, rowsPerPage, dispatch]);
 
   let filteredNotes = notes;
