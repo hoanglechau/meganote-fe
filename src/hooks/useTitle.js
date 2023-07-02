@@ -1,7 +1,11 @@
 // Custom hook to set the title of the page
 import { useEffect } from "react";
 
-// Receives the title that we want to set as a prop
+/**
+ * @description This hook is used to set the title of the page
+ * @param {string} title
+ * @author [Hoang Le Chau](https://github.com/hoanglechau)
+ */
 const useTitle = title => {
   useEffect(() => {
     // Get the previous title from the DOM
