@@ -7,6 +7,17 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { useTheme } from "@mui/material/styles";
 import { useState } from "react";
 
+/**
+ * @description A modal component that asks for confirmation when clicking a button
+ * @param {string} buttonText
+ * @param {string} title
+ * @param {string} content
+ * @param {function} handleConfirm
+ * @param {string} yesText
+ * @param {string} noText
+ * @param {object} other
+ * @author [Hoang Le Chau](https://github.com/hoanglechau)
+ */
 export default function ConfirmModal({
   buttonText,
   title,
