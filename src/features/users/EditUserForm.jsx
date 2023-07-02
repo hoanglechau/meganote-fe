@@ -1,20 +1,15 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { LoadingButton } from "@mui/lab";
 import {
   Alert,
   Box,
   Container,
-  IconButton,
-  InputAdornment,
   MenuItem,
   Paper,
   Stack,
   Typography,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -34,33 +29,36 @@ const RegisterSchema = Yup.object().shape({
   username: Yup.string()
     .min(3, "Minimum 3 letters")
     .max(20, "Maximum 20 letters")
-    .matches("[A-Za-z]", "Only letters are allowed")
+    .matches(
+      /^[\w\-\\S]+$/i,
+      "Only letters, numbers, hyphens, and underscores are allowed. No whitespaces"
+    )
     .required("Username is required"),
-  password: Yup.string()
-    .min(4, "Minimum 4 characters")
-    .max(12, "Maximum 12 characters")
-    .matches("[A-z0-9!@#$%]", "Only letters, numbers, and !@#$% are allowed")
-    .required("Password is required"),
-  passwordConfirmation: Yup.string()
-    .required("Please confirm your password")
-    .oneOf([Yup.ref("password")], "Passwords must match"),
-  avatarUrl: Yup.string().url("Please enter a valid URL"),
+  fullname: Yup.string()
+    .min(3, "Minimum 3 letters")
+    .max(20, "Maximum 20 letters")
+    .matches(/^[a-z\s]+$/i, "Only letters are allowed")
+    .required("Full name is required"),
+  email: Yup.string()
+    .email("Please enter a valid email")
+    .required("Email is required"),
 });
 
+/**
+ * @description The form for editing a user's details
+ * @param {object} user The user object
+ * @author [Hoang Le Chau](https://github.com/hoanglechau)
+ */
 const EditUserForm = ({ user }) => {
   const auth = useAuth();
   const theme = useTheme();
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [showPasswordConfirmation, setShowPasswordConfirmation] =
-    useState(false);
-
   const defaultValues = {
     username: user.user.username,
+    fullname: user.user.fullname,
+    email: user.user.email,
     role: user.user.role,
     active: user.user.active,
-    avatarUrl: user.user.avatarUrl,
-    password: "",
   };
 
   const navigate = useNavigate();
@@ -96,10 +94,17 @@ const EditUserForm = ({ user }) => {
   });
 
   const onSaveUserClicked = async data => {
-    const { username, role, active, password, avatarUrl } = data;
+    const { username, fullname, email, role, active } = data;
     try {
       await auth.updateUser(
-        { id: user.user._id, username, role, active, password, avatarUrl },
+        {
+          id: user.user._id,
+          username,
+          fullname,
+          email,
+          role,
+          active,
+        },
         () => {
           navigate("/dash/users");
         }
@@ -135,7 +140,7 @@ const EditUserForm = ({ user }) => {
       <Paper
         elevation={1}
         sx={{
-          p: 5,
+          p: { xs: 2, sm: 5 },
           border: "1px solid #ccc",
           boxShadow: "none",
           width: "100%",
@@ -164,53 +169,8 @@ const EditUserForm = ({ user }) => {
             )}
 
             <FTextField name="username" label="Username" />
-            <FTextField name="avatarUrl" label="Avatar URL" />
-
-            <FTextField
-              name="password"
-              label="Password"
-              type={showPassword ? "text" : "password"}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      onClick={() => setShowPassword(!showPassword)}
-                      edge="end"
-                    >
-                      {showPassword ? (
-                        <VisibilityIcon />
-                      ) : (
-                        <VisibilityOffIcon />
-                      )}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-
-            <FTextField
-              name="passwordConfirmation"
-              label="Password Confirmation"
-              type={showPasswordConfirmation ? "text" : "password"}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      onClick={() =>
-                        setShowPasswordConfirmation(!showPasswordConfirmation)
-                      }
-                      edge="end"
-                    >
-                      {showPasswordConfirmation ? (
-                        <VisibilityIcon />
-                      ) : (
-                        <VisibilityOffIcon />
-                      )}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
+            <FTextField name="fullname" label="Full Name" />
+            <FTextField name="email" label="Email" />
 
             <FSelect name="role" label="Role">
               {options}
