@@ -1,5 +1,9 @@
 import { CircularProgress, Paper } from "@mui/material";
 
+/**
+ * @description A loading page component
+ * @author [Hoang Le Chau](https://github.com/hoanglechau)
+ */
 function LoadingPage() {
   return (
     <Paper
