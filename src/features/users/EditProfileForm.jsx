@@ -53,7 +53,6 @@ const EditProfileForm = ({ user }) => {
         getDownloadURL(imageRef)
           .then(url => {
             setUrl(url);
-            console.log("url", url);
           })
           .catch(error => {
             toast.error(error.message);
