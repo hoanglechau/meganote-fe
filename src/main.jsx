@@ -10,6 +10,11 @@ import { Provider } from "react-redux";
 import App from "./App.jsx";
 import "./index.css";
 
+/**
+ * @description The main entry point of the app
+ * @author [Hoang Le Chau](https://github.com/hoanglechau)
+ */
+
 if (import.meta.env.VITE_NODE_ENV === "production") disableReactDevTools();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
