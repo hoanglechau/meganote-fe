@@ -16,6 +16,10 @@ import useTitle from "../../hooks/useTitle";
 import UserTable from "./UserTable";
 import { getUsers } from "./usersSlice";
 
+/**
+ * @description This component renders the page with a list of all users
+ * @author [Hoang Le Chau](https://github.com/hoanglechau)
+ */
 const UsersList = () => {
   useTitle("Meganote: Users List");
 
@@ -84,6 +88,9 @@ const UsersList = () => {
         sx={{
           height: "100%",
           width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
         }}
       >
         <Typography
@@ -98,7 +105,7 @@ const UsersList = () => {
         >
           Users List
         </Typography>
-        <Card sx={{ p: { xs: 0.9, sm: 3, lg: 3 }, boxShadow: "none" }}>
+        <Card sx={{ p: { xs: 1.5, sm: 3, lg: 3 }, boxShadow: "none" }}>
           <Stack spacing={2}>
             <Stack direction={{ xs: "column", sm: "row" }} alignItems="center">
               <Box
@@ -158,7 +165,7 @@ const UsersList = () => {
                 sx={{
                   "& .MuiTablePagination-selectLabel, .MuiTablePagination-select, .MuiTablePagination-selectIcon":
                     {
-                      display: { xs: "none", md: "block" },
+                      display: { xs: "none", lg: "flex" },
                     },
                 }}
                 component="div"
