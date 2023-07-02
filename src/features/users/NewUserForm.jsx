@@ -28,26 +28,45 @@ const UserSchema = Yup.object().shape({
   username: Yup.string()
     .min(3, "Minimum 3 letters")
     .max(20, "Maximum 20 letters")
-    .matches("[A-Za-z]", "Only letters are allowed")
+    .matches(
+      /^[\w\-\\S]+$/i,
+      "Only letters, numbers, hyphens, and underscores are allowed. No whitespaces"
+    )
     .required("Username is required"),
+  fullname: Yup.string()
+    .min(3, "Minimum 3 letters")
+    .max(20, "Maximum 20 letters")
+    .matches(/^[a-z\s]+$/i, "Only letters are allowed")
+    .required("Full name is required"),
+  email: Yup.string()
+    .email("Please enter a valid email")
+    .required("Email is required"),
   password: Yup.string()
     .min(4, "Minimum 4 characters")
     .max(12, "Maximum 12 characters")
-    .matches("[A-z0-9!@#$%]", "Only letters, numbers, and !@#$% are allowed")
+    .matches(
+      /^[\w\-\S]+$/,
+      "Only letters, numbers, and special characters allowed. No whitespaces"
+    )
     .required("Password is required"),
   passwordConfirmation: Yup.string()
     .required("Please confirm your password")
     .oneOf([Yup.ref("password")], "Passwords must match"),
-  avatarUrl: Yup.string().url("Please enter a valid URL"),
 });
 
 const defaultValues = {
   username: "",
+  fullname: "",
+  email: "",
   password: "",
   passwordConfirmation: "",
   role: "Employee",
 };
 
+/**
+ * @description The New User page, with a form for creating a new user
+ * @author [Hoang Le Chau](https://github.com/hoanglechau)
+ */
 function NewUserForm() {
   // Custom hook to set the page title
   useTitle("Meganote: New User");
@@ -71,11 +90,14 @@ function NewUserForm() {
   } = methods;
 
   const onSubmit = async data => {
-    const { username, password, role, avatarUrl } = data;
+    const { username, fullname, email, password, role } = data;
     try {
-      await auth.createUser({ username, password, role, avatarUrl }, () => {
-        navigate("/dash/users");
-      });
+      await auth.createUser(
+        { username, fullname, email, password, role },
+        () => {
+          navigate("/dash/users");
+        }
+      );
     } catch (error) {
       reset();
       setError("responseError", { message: error.message });
@@ -116,7 +138,7 @@ function NewUserForm() {
       <Paper
         elevation={1}
         sx={{
-          p: 5,
+          p: { xs: 2, sm: 5 },
           border: "1px solid #ccc",
           boxShadow: "none",
           width: "100%",
@@ -142,7 +164,9 @@ function NewUserForm() {
             )}
 
             <FTextField name="username" label="Username" />
-            <FTextField name="avatarUrl" label="Avatar URL" />
+            <FTextField name="fullname" label="Full Name" />
+            <FTextField name="email" label="Email" />
+
             <FTextField
               name="password"
               label="Password"
