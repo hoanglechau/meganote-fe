@@ -55,12 +55,12 @@ const slice = createSlice({
       state.selectedNote = action.payload;
     },
 
-    updateNoteSuccess(state, action) {
+    updateNoteSuccess(state) {
       state.isLoading = false;
       state.error = null;
     },
 
-    deleteNoteSuccess(state, action) {
+    deleteNoteSuccess(state) {
       state.isLoading = false;
       state.error = null;
     },
