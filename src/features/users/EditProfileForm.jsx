@@ -91,8 +91,10 @@ const EditProfileForm = ({ user }) => {
           avatarUrl: url,
         },
         () => {
-          window.location.reload(false);
-          navigate("/dash/notes");
+          setTimeout(() => {
+            window.location.reload(false);
+            navigate("/dash/notes");
+          }, "600");
         }
       );
     } catch (error) {
