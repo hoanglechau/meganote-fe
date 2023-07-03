@@ -20,6 +20,7 @@ const initialState = {
 const INITIALIZE = "AUTH.INITIALIZE";
 const LOGIN_SUCCESS = "AUTH.LOGIN_SUCCESS";
 const LOGOUT = "AUTH.LOGOUT";
+const UPDATE_PROFILE = "AUTH.UPDATEPROFILE";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -44,7 +45,12 @@ const reducer = (state, action) => {
         isAuthenticated,
         user,
       };
-
+    case UPDATE_PROFILE:
+      const { updatedUser } = action.payload;
+      return {
+        ...state,
+        user: updatedUser,
+      };
     default:
       return state;
   }
@@ -256,6 +262,10 @@ function AuthProvider({ children }) {
       id,
       fullname,
       avatarUrl,
+    });
+    dispatch({
+      type: UPDATE_PROFILE,
+      payload: { updatedUser: response.updatedUser },
     });
     toast.success(response.message);
     callback();
