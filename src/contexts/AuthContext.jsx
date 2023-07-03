@@ -136,7 +136,7 @@ function AuthProvider({ children }) {
     dispatch({
       type: LOGOUT,
     });
-    toast.success("Logged out successfully!");
+    toast.success("See you again!");
     callback();
   };
 
