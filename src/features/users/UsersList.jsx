@@ -1,17 +1,21 @@
+import SearchIcon from "@mui/icons-material/Search";
 import {
   Box,
   Card,
   Container,
+  IconButton,
+  InputAdornment,
   Paper,
   Stack,
   Switch,
   TablePagination,
+  TextField,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import debounce from "lodash.debounce";
+import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import LoadingCircle from "../../components/LoadingCircle";
-import SearchInput from "../../components/SearchInput";
 import useTitle from "../../hooks/useTitle";
 import UserTable from "./UserTable";
 import { getUsers } from "./usersSlice";
@@ -27,6 +31,28 @@ const UsersList = () => {
   const [filterInactive, setFilterInactive] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const onSubmit = e => {
+    e.preventDefault();
+    handleSubmit(searchQuery);
+    setSearchQuery("");
+  };
+
+  const handleChangeQuery = e => {
+    setSearchQuery(e.target.value);
+  };
+
+  // Debounce for search input
+  const debouncedResults = useMemo(() => {
+    return debounce(handleChangeQuery, 600);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      debouncedResults.cancel();
+    };
+  });
 
   const { isLoading, currentPageUsers, usersById, totalUsers } = useSelector(
     state => state.users
@@ -47,11 +73,14 @@ const UsersList = () => {
     setFilterName(searchQuery);
   };
 
+  useEffect(() => {
+    setFilterName(searchQuery);
+  }, [searchQuery]);
+
   // Filter inactive users
 
   const handleFilterInactive = () => {
     setFilterInactive(!filterInactive);
-    setFilterName("");
   };
 
   useEffect(() => {
@@ -116,11 +145,27 @@ const UsersList = () => {
                   alignItems: "center",
                 }}
               >
-                <SearchInput
-                  handleSubmit={handleSubmit}
-                  placeholder="Search users..."
-                  sx={{ width: { xs: "100%", md: "300px" } }}
-                />
+                <form onSubmit={onSubmit}>
+                  <TextField
+                    placeholder="Search users..."
+                    onChange={debouncedResults}
+                    sx={{ width: { xs: "100%", md: "300px" } }}
+                    size="small"
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            type="submit"
+                            color="primary"
+                            aria-label="search"
+                          >
+                            <SearchIcon />
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </form>
 
                 <Typography
                   variant="subtitle"
