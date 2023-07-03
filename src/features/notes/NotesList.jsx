@@ -1,17 +1,21 @@
+import SearchIcon from "@mui/icons-material/Search";
 import {
   Box,
   Card,
   Container,
+  IconButton,
+  InputAdornment,
   Paper,
   Stack,
   Switch,
   TablePagination,
+  TextField,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import debounce from "lodash.debounce";
+import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import LoadingCircle from "../../components/LoadingCircle";
-import SearchInput from "../../components/SearchInput";
 import useAuth from "../../hooks/useAuth";
 import useTitle from "../../hooks/useTitle";
 import NoteTable from "./NoteTable";
@@ -30,6 +34,28 @@ const NotesList = () => {
   const [filterCompleted, setFilterCompleted] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const onSubmit = e => {
+    e.preventDefault();
+    handleSubmit(searchQuery);
+    setSearchQuery("");
+  };
+
+  const handleChangeQuery = e => {
+    setSearchQuery(e.target.value);
+  };
+
+  // Debounce for search input
+  const debouncedResults = useMemo(() => {
+    return debounce(handleChangeQuery, 600);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      debouncedResults.cancel();
+    };
+  });
 
   const { isLoading, currentPageNotes, notesById, totalNotes } = useSelector(
     state => state.notes
@@ -50,11 +76,14 @@ const NotesList = () => {
     setFilterName(searchQuery);
   };
 
+  useEffect(() => {
+    setFilterName(searchQuery);
+  }, [searchQuery]);
+
   // Filter inactive notes
 
   const handleFilterCompleted = () => {
     setFilterCompleted(!filterCompleted);
-    setFilterName("");
   };
 
   useEffect(() => {
@@ -66,7 +95,6 @@ const NotesList = () => {
         limit: rowsPerPage,
       })
     );
-    setFilterName("");
   }, [filterName, filterCompleted, page, rowsPerPage, dispatch]);
 
   let filteredNotes = notes;
@@ -130,11 +158,27 @@ const NotesList = () => {
                   alignItems: "center",
                 }}
               >
-                <SearchInput
-                  handleSubmit={handleSubmit}
-                  placeholder="Search notes..."
-                  sx={{ width: { xs: "100%", md: "300px" } }}
-                />
+                <form onSubmit={onSubmit}>
+                  <TextField
+                    placeholder="Search notes..."
+                    onChange={debouncedResults}
+                    sx={{ width: { xs: "100%", md: "300px" } }}
+                    size="small"
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            type="submit"
+                            color="primary"
+                            aria-label="search"
+                          >
+                            <SearchIcon />
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </form>
 
                 <Typography
                   variant="subtitle"
