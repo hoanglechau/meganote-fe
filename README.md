@@ -109,6 +109,7 @@ Features for the future: Making a mobile version of the app for iOS and Android.
 - Admins can choose to hide inactive users
 - Users can search for notes by ticket number, title, or user's name
 - Users can choose to hide completed notes
+- Debounced search input
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
